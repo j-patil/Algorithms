@@ -89,6 +89,7 @@ public class LinkedList {
 		}
 	}
 	
+	// Counts the number of elements 
 	public int countall(){
 		if(head == null){
 			return 0;
@@ -103,9 +104,56 @@ public class LinkedList {
 		}	
 	}
 	
+	// Shows nth node data; -1 if n is below 0; -2 if n is more than the elements in the Linked List
+	public int NthNode(int n){
+		if(n<1) return -1;
+		else{
+			Node nth = head;
+			for(int i=n; i>1 && nth!=null; i--){
+				nth = nth.next;
+			}
+			if(nth == null) return -2;
+			else return nth.data;
+		}
+	}
+	
+	// Prints the middle element's data
+	public int printmiddle(){
+		if(head == null || head.next == null) return -1;
+		else{
+			Node slow = head;
+			Node fast = head;
+			while(fast!=null && fast.next!=null){
+				slow = slow.next;
+				fast = fast.next.next;
+			}
+			return slow.data;
+		}
+	}
+	
+	// reversing the Linked List - Recursive function
+	public Node reversecall(Node curr, Node prev){
+		if(curr.next == null){
+			head = curr;
+			curr.next = prev;
+			return null;
+		}
+		Node nextnode = curr.next;
+		curr.next = prev;
+		reversecall(nextnode, curr);
+		return head;
+	}
+	
+	public void reverse(){
+		if(head!=null || head.next!=null){
+			head = reversecall(head, null);
+		}
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LinkedList l = new LinkedList();
+		LinkedList l1 = new LinkedList();
 		l.head = new Node(1);
 		l.insertfront(234);
 		l.insertfront(24);
@@ -119,6 +167,13 @@ public class LinkedList {
 		System.out.println();
 		l.printall();
 		System.out.println("Number of elements: "+l.countall());
+		System.out.println("Nth Element is : "+l.NthNode(3));
+		l.insertlast(56);
+		l.insertlast(98);
+		l.printall();
+		System.out.println("Middle Element is : "+l.printmiddle());
+		l.reverse();
+		l.printall();
 	}
 
 }
